@@ -1,0 +1,15 @@
+.navbar{
+    background-color:rgb(229, 229, 229)
+}
+
+ul{
+    display: flex;
+    flex-direction: row;
+
+}
+li{
+    padding-left: 30px;
+}
+#root{
+    margin-top: 155px;
+}

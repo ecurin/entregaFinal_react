@@ -19,8 +19,8 @@ export const ItemCounter = ({initial=1, stock=10, onAdd}) =>{
         <div className="text-center">
             <p>Cantidad : {count}</p>
         </div>
-        <button className='btn btn-outline-dark' onClick={handleSuma}>+</button>
-        <button className='btn btn-outline-dark' onClick={handleResta}>-</button>
+        <button className='btn btn-outline-dark' onClick={handleSuma}>+</button>  
+        <button className='btn btn-outline-dark' onClick={handleResta}>-</button> &nbsp;
         <button className='btn btn-outline-dark' onClick={handleOnAdd}>Agregar</button>
         </>
     )

@@ -7,6 +7,10 @@
   background-color: white;
 }
 
+.imgDetail{
+  max-width: 500px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

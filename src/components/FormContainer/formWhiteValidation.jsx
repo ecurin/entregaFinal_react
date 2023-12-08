@@ -14,13 +14,11 @@ export const formWhiteValidation = (FromWrappedComponent) => {
             if(!props.formData.nombre){
                 newErrors.nombre = 'Campo nombre obligatorio'
                 isValid = false
-                console.log('err nombre')
 
             }
             if(!props.formData.correo){
                 newErrors.correo = 'Campo correo obligatorio'
                 isValid = false
-                console.log('err correo')
             }
 
             setError(newErrors)

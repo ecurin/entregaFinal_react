@@ -6,13 +6,18 @@ import { useParams } from 'react-router-dom';
 import {collection, doc, getDoc, getDocs, getFirestore, query, where} from 'firebase/firestore';
 
 
+const Loading = () => {
+
+    return <h2>Cargando...</h2>
+}
+
 
 function ItemListContainer({greeting = 'valor inicial'}){
     
     const subTit = 'Bienvenidos a nuestro sitio.'
     const [products, setProducts] = useState([])
-    const [product, setProduct] = useState({})
     const [loading, setLoading] = useState(true)
+    //const [product, setProduct] = useState({})
 
     const {cid} = useParams()
 
@@ -57,7 +62,7 @@ function ItemListContainer({greeting = 'valor inicial'}){
                 
         <div className='d-flex justify-content-center'>
         {
-            loading ? <h2>Cargando...</h2>
+            loading ? <Loading />
         :
            <ItemList products={products} />
         }  

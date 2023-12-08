@@ -26,7 +26,6 @@ const FormContainer = () => {
 
 
     return (
-        //<Form formData={formData} handleOnChange={handleOnChange} />
         <FormWhiteValidation 
             formData={formData}
             handleOnChange={handleOnChange}

@@ -8,8 +8,6 @@ export  const ItemDetail = ({product}) => {
     const {Add2Cart, cartList} = useContext(CartContext) 
 
     const onAdd = cant => {
-        console.log('Se han agregado  [' + cant + '] unidades.')
-        
         Add2Cart({...product, cant})
     }
 

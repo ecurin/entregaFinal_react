@@ -22,7 +22,7 @@ function ItemListContainer({greeting = 'valor inicial'}){
         const queryColl = collection(dbFs,'products')
 
 
-
+          
         if(cid ){
             const queryFilter = query(queryColl, where('category','==', cid))
 
@@ -44,7 +44,6 @@ function ItemListContainer({greeting = 'valor inicial'}){
 
     },[cid])
 
-    console.log(products, cid)
 
 
 
@@ -54,19 +53,16 @@ function ItemListContainer({greeting = 'valor inicial'}){
         <>
         <Titulo 
                 titulo ={greeting}
-            
         />
                 
-              
-            <div className='d-flex justify-content-center'>
-            {
-                loading ? <h2>Cargando...</h2>
-            :
-                <ItemList products={products} />
-            }  
-            </div>
-            
-            
+        <div className='d-flex justify-content-center'>
+        {
+            loading ? <h2>Cargando...</h2>
+        :
+           <ItemList products={products} />
+        }  
+        </div>
+           
         </>
     )
 }

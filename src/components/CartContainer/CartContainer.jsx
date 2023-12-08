@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { CartContext } from "../../context/CartContext"
 import FormContainer from "../FormContainer/FormContainer"
 import { addDoc, collection, getFirestore } from "firebase/firestore"
@@ -8,7 +8,14 @@ import { addDoc, collection, getFirestore } from "firebase/firestore"
 
 export const CartContainer = () => {
 
-    const {cartList, ClearCart, totalPrice} = useContext(CartContext)
+    const [isId, setIsId] = useState('')
+    const [formData, setFormData] = useState({
+        name:'',
+        phone:'',
+        email:''
+    })
+
+    const {cartList, ClearCart, totalPrice, removeProducts} = useContext(CartContext)
 
     const handleOrders = () => {
         
@@ -20,58 +27,66 @@ export const CartContainer = () => {
             
         order.buyer = {name: 'Erik', phone : '12345 ', mail : 'erik@gmail.com' }
 
-        //order.items = [{id:'', price:'', title:'', cant:0}],
-        //order.items = cartList.map( product => ({id : product.id , price : product.price , title : product.name , cant : product.cant }))
-
         //aplicamos destructuring de product
         order.items = cartList.map( ({id , price, name, cant }) => ({id : id , price : price , title : name , cant : cant }))
 
         order.total = totalPrice()
-
-        
+       
         const db = getFirestore()
         const queryCol = collection(db, 'order')
 
         addDoc(queryCol, order)
-        .then(
-            //res => console.log(res)
+        .then(({id}) => {
+
+            setIsId(id)
+
+            //res => console.log('Se ha generado su ID de Compra ', res._key.path.segments[1]) 
             
-                res => console.log('Se ha generado su ID de Compra ', res._key.path.segments[1]) 
-            
-            
-            
-        )
+        })
         .catch(err => console.log(err))
+        .finally(() =>{
+            setFormData({
+                name:'',
+                phone:'',
+                email:''
+            })
+            ClearCart()
+        })
         
-        console.log('Enviando orden', order)
-
-        //Alert("Orden enviada, gracias por su compra!!")
-
 
     }
 
     return (
         <div className= "w-100">
         <h1>Mi Carro</h1>
+        
+        {isId != '' && <h2>El Id de la compra es : {isId} </h2>}
         {
-            cartList.map(product => <div>
+            cartList.length == 0 ?
+            <div>
+                {isId == '' && <h2>No hay productos en el carrito...</h2>}
+            </div>
+            
+            :
+            <div>
+            {
+            cartList.map(product => <div key={product.id}>
                                         <img src={product.imageURL} width='40' height='40'/>
-                                        {product.cant} x  &nbsp;
-                                        {product.name}
-                                        <hr/>
+                                        {product.cant} x {product.price} &nbsp;
+                                        {product.name} &nbsp; &nbsp; &nbsp;
+                                        <button className='btn btn-danger' onClick={() => removeProducts(product.id)}> X </button>
                                         </div>)
-        }
-            <p>TOTAL: { totalPrice() }
-                </p>
-                <hr/>
-
+            }
+            <p>TOTAL: { totalPrice() }</p>
 
             <FormContainer />
             <hr/>
-
+       
             <button className="btn btn-outline-dark" onClick={ClearCart}>Vaciar</button> 
             &nbsp;
             <button className="btn btn-outline-dark" onClick={finishPurchase}>Finalizar Compra</button>
+            </div>
+        }
         </div>
     )
 }
